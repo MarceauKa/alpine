@@ -4,81 +4,78 @@
 ![npm version](https://img.shields.io/npm/v/alpinejs)
 [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg?sanitize=true)](https://alpinejs.codewithhugo.com/chat/)
 
-Alpine.js offers you the reactive and declarative nature of big frameworks like Vue or React at a much lower cost.
+Alpine.js est un framework réactif et performant comme Vue ou React en plus léger.
 
-You get to keep your DOM, and sprinkle in behavior as you see fit.
+Venez avec votre DOM et ajoutez y simplement vos comportements souhaités.
 
-Think of it like [Tailwind](https://tailwindcss.com/) for JavaScript.
+Cela marche comme [Tailwind](https://tailwindcss.com/) mais en JavaScript.
 
-> Note: This tool's syntax is almost entirely borrowed from [Vue](https://vuejs.org/) (and by extension [Angular](https://angularjs.org/)). I am forever grateful for the gift they are to the web.
+> Note: La syntaxe de cet outil est presque entièrement empruntée à [Vue](https://vuejs.org/) (et par extension à [Angular](https://angularjs.org/)). Je serais éternellement reconnaissant du cadeau qu'ils ont fait au Web. 
 
-[**Documentation française**](./README.fr.md)
+[**English documentation**](./README.md)
 [**日本語ドキュメント**](./README.ja.md)
 [**繁體中文使用文件**](./README_zh-TW.md)
 [**Документация на русском**](./README.ru.md)
 
-## Install
+## Installation
 
-**From CDN:** Add the following script to the end of your `<head>` section.
+**Depuis un CDN:** Ajoutez le script suivant à la fin de votre section `<head>`.
 ```html
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 ```
 
-That's it. It will initialize itself.
+C'est tout ! Alpine.js s'initialisera tout seul.
 
-For production environments, it's recommended to pin a specific version number in the link to avoid unexpected breakage from newer versions.
-For example, to use version `2.3.5`:
+Utilisé en production, il est recommandé de spécifier une version précise pour éviter les changements des nouvelles versions.
+Par exemple, pour utiliser la version `2.4.0`:
 ```html
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.4.0/dist/alpine.min.js" defer></script>
 ```
 
-**From NPM:** Install the package from NPM.
+**Depuis NPM :** Installez le paquet depuis NPM.
 ```js
 npm i alpinejs
 ```
 
-Include it in your script.
+Importez le ensuite dans votre script.
 ```js
 import 'alpinejs'
 ```
 
-**For IE11 support** Use the following scripts instead.
+**Pour le support de Internet Explorer 11** utilisez le script suivant.
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
-<script nomodule src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine-ie11.min.js" defer></script>
+<script type="module" src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.4.0/dist/alpine.min.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.4.0/dist/alpine-ie11.min.js" defer></script>
 ```
 
-The pattern above is the [module/nomodule pattern](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/) that will result in the modern bundle automatically loaded on modern browsers, and the IE11 bundle loaded automatically on IE11 and other legacy browsers.
+## Utilisation
 
-## Use
-
-*Dropdown/Modal*
+*Menu déroulant*
 ```html
 <div x-data="{ open: false }">
-    <button @click="open = true">Open Dropdown</button>
+    <button @click="open = true">Ouvrir le menu</button>
 
     <ul
         x-show="open"
         @click.away="open = false"
     >
-        Dropdown Body
+        Contenu du menu
     </ul>
 </div>
 ```
 
-*Tabs*
+*Onglets*
 ```html
 <div x-data="{ tab: 'foo' }">
     <button :class="{ 'active': tab === 'foo' }" @click="tab = 'foo'">Foo</button>
     <button :class="{ 'active': tab === 'bar' }" @click="tab = 'bar'">Bar</button>
 
-    <div x-show="tab === 'foo'">Tab Foo</div>
-    <div x-show="tab === 'bar'">Tab Bar</div>
+    <div x-show="tab === 'foo'">Onglet "Foo"</div>
+    <div x-show="tab === 'bar'">Onglet "Bar"</div>
 </div>
 ```
 
-You can even use it for non-trivial things:
-*Pre-fetching a dropdown's HTML content on hover*
+*Pré-charger le contenu du menu déroulant au survol*
 ```html
 <div x-data="{ open: false }">
     <button
@@ -88,58 +85,57 @@ You can even use it for non-trivial things:
                 .then(html => { $refs.dropdown.innerHTML = html })
         "
         @click="open = true"
-    >Show Dropdown</button>
+    >Ouvrir le menu</button>
 
     <div x-ref="dropdown" x-show="open" @click.away="open = false">
-        Loading Spinner...
+        Chargement en cours...
     </div>
 </div>
 ```
 
-## Learn
+## Guide
 
-There are 13 directives available to you:
+Il y a 13 directives à votre disposition :
 
 | Directive | Description |
 | --- | --- |
-| [`x-data`](#x-data) | Declares a new component scope. |
-| [`x-init`](#x-init) | Runs an expression when a component is initialized. |
-| [`x-show`](#x-show) | Toggles `display: none;` on the element depending on expression (true or false). |
-| [`x-bind`](#x-bind) | Sets the value of an attribute to the result of a JS expression |
-| [`x-on`](#x-on) | Attaches an event listener to the element. Executes JS expression when emitted. |
-| [`x-model`](#x-model) | Adds "two-way data binding" to an element. Keeps input element in sync with component data. |
-| [`x-text`](#x-text) | Works similarly to `x-bind`, but will update the `innerText` of an element. |
-| [`x-html`](#x-html) | Works similarly to `x-bind`, but will update the `innerHTML` of an element. |
-| [`x-ref`](#x-ref) | Convenient way to retrieve raw DOM elements out of your component. |
-| [`x-if`](#x-if) | Remove an element completely from the DOM. Needs to be used on a `<template>` tag. |
-| [`x-for`](#x-for) | Create new DOM nodes for each item in an array. Needs to be used on a `<template>` tag. |
-| [`x-transition`](#x-transition) | Directives for applying classes to various stages of an element's transition |
-| [`x-spread`](#x-spread) | Allows you to bind an object of Alpine directives to an element for better reausibility |
-| [`x-cloak`](#x-cloak) | This attribute is removed when Alpine initializes. Useful for hiding pre-initialized DOM. |
+| [`x-data`](#x-data) | Déclare un nouveau composant. |
+| [`x-init`](#x-init) | Lance une expression quand le composant est initialisé. |
+| [`x-show`](#x-show) | Applique ou non le style `display: none;` en fonction d'une expression (true ou false). |
+| [`x-bind`](#x-bind) | Défini la valeur d'un attribut résultant d'une expression JS. |
+| [`x-on`](#x-on) | Attache un évènement à l'élément. Exécute une expression JS quand déclenché. |
+| [`x-model`](#x-model) | Ajoute une assignation à deux sens sur un élément. Conserve la synchronisation avec les données du composant. |
+| [`x-text`](#x-text) | Similaire à `x-bind` mais met à jour le contenu `innerText` de l'élément. |
+| [`x-html`](#x-html) | Similaire à `x-bind` mais met à jour le contenu `innerHTML` de l'élément. |
+| [`x-ref`](#x-ref) | Permet de d'accèder plus facilement à vos éléments en dehors du composant. |
+| [`x-if`](#x-if) | Similaire à `x-show` mais supprime complétement l'élément du DOM. Doit être utilisé dans un élément `<template>`. |
+| [`x-for`](#x-for) | Créé autant de noeud DOM qu'il y'a d'élément dans le tableau fourni. Doit être utilisé dans un élément `<template>`. |
+| [`x-transition`](#x-transition) | Applique des classes CSS à l'élément à plusieurs étapes de transition. |
+| [`x-spread`](#x-spread) | Associe un objet de directives Alpine pour une meilleure ré-utilisabilité. |
+| [`x-cloak`](#x-cloak) | Cette directive est supprimée quand Alpine est initialisé. Pratique pour cacher le DOM avant le chargement. |
 
-And 6 magic properties:
+Et 6 propriétés magiques :
 
-| Magic Properties | Description |
+| Propriété | Description |
 | --- | --- |
-| [`$el`](#el) |  Retrieve the root component DOM node. |
-| [`$refs`](#refs) | Retrieve DOM elements marked with `x-ref` inside the component. |
-| [`$event`](#event) | Retrieve the native browser "Event" object within an event listener.  |
-| [`$dispatch`](#dispatch) | Create a `CustomEvent` and dispatch it using `.dispatchEvent()` internally. |
-| [`$nextTick`](#nexttick) | Execute a given expression AFTER Alpine has made its reactive DOM updates. |
-| [`$watch`](#watch) | Will fire a provided callback when a component property you "watched" gets changed. |
-
+| [`$el`](#el) |  Récupére l'élement DOM |
+| [`$refs`](#refs) | Récupère les éléments DOM marqués avec la directive `x-ref`. |
+| [`$event`](#event) | Récupère l'évènement natif dans le listener d'un event.  |
+| [`$dispatch`](#dispatch) | Crée un `CustomEvent` et le déclenche en utilisant `.dispatchEvent()`. |
+| [`$nextTick`](#nexttick) | Exécute une expression après que Alpine ait terminé sa mise à jour du DOM. |
+| [`$watch`](#watch) | Exécute un callback après qu'une propriété ait été modifiée. |
 
 ## Sponsors
 
 <img width="33%" src="https://refactoringui.nyc3.cdn.digitaloceanspaces.com/tailwind-logo.svg" alt="Tailwind CSS">
 
-**Want your logo here? [DM on Twitter](https://twitter.com/calebporzio)**
+**Votre logo ici ? [DM sur Twitter](https://twitter.com/calebporzio)**
 
-## VIP Contributors
+## Contributeurs VIP
 
 <table>
   <tr>
-    <td align="center"><a href="http://calebporzio.com"><img src="https://avatars2.githubusercontent.com/u/3670578?v=4" width="100px;" alt="Caleb Porzio"/><br /><sub><b>Caleb Porzio</b></sub></a><br /><sub>(Creator)</sub></td>
+    <td align="center"><a href="http://calebporzio.com"><img src="https://avatars2.githubusercontent.com/u/3670578?v=4" width="100px;" alt="Caleb Porzio"/><br /><sub><b>Caleb Porzio</b></sub></a><br /><sub>(Créateur)</sub></td>
     <td align="center"><a href="https://github.com/HugoDF"><img src="https://avatars2.githubusercontent.com/u/6459679?v=4" width="100px;" alt="Hugo"/><br /><sub><b>Hugo</b></sub></a></td>
     <td align="center"><a href="https://github.com/ryangjchandler"><img src="https://avatars2.githubusercontent.com/u/41837763?v=4" width="100px;" alt="Ryan Chandler"/><br /><sub><b>Ryan Chandler</b></sub></a></td>
     <td align="center"><a href="https://github.com/SimoTod"><img src="https://avatars2.githubusercontent.com/u/8427737?v=4" width="100px;" alt="Simone Todaro"/><br /><sub><b>Simone Todaro</b></sub></a></td>
@@ -152,24 +148,24 @@ And 6 magic properties:
 
 ### `x-data`
 
-**Example:** `<div x-data="{ foo: 'bar' }">...</div>`
+**Exemple:** `<div x-data="{ foo: 'bar' }">...</div>`
 
 **Structure:** `<div x-data="[JSON data object]">...</div>`
 
-`x-data` declares a new component scope. It tells the framework to initialize a new component with the following data object.
+`x-data` déclare le scope d'un composant. Il indique au framework qu'il doit initialiser un nouveau composant avec les données associées.
 
-Think of it like the `data` property of a Vue component.
+Similaire à la propriété `data` d'un composant Vue.js.
 
-**Extract Component Logic**
+**Séparer la logique**
 
-You can extract data (and behavior) into reusable functions:
+Vous pouvez séparer la logique et les données dans une fonction réutilisable:
 
 ```html
 <div x-data="dropdown()">
-    <button x-on:click="open">Open</button>
+    <button x-on:click="open">Ouvrir</button>
 
     <div x-show="isOpen()" x-on:click.away="close">
-        // Dropdown
+        // Menu déroulant
     </div>
 </div>
 
@@ -185,10 +181,7 @@ You can extract data (and behavior) into reusable functions:
 </script>
 ```
 
-> **For bundler users**, note that Alpine.js accesses functions that are in the global scope (`window`), you'll need to explicitly assign your functions to `window` in order to use them with `x-data` for example `window.dropdown = function () {}` (this is because with Webpack, Rollup, Parcel etc. `function`'s you define will default to the module's scope not `window`).
-
-
-You can also mix-in multiple data objects using object destructuring:
+Vous pouvez également mélanger plusieurs comportements en destructurant un objet:
 
 ```html
 <div x-data="{...dropdown(), ...tabs()}">
@@ -197,20 +190,22 @@ You can also mix-in multiple data objects using object destructuring:
 ---
 
 ### `x-init`
-**Example:** `<div x-data="{ foo: 'bar' }" x-init="foo = 'baz'"></div>`
+
+**Exemple:** `<div x-data="{ foo: 'bar' }" x-init="foo = 'baz'"></div>`
 
 **Structure:** `<div x-data="..." x-init="[expression]"></div>`
 
-`x-init` runs an expression when a component is initialized.
+`x-init` éxécute une expression à l'initialisation.
 
-If you wish to run code AFTER Alpine has made its initial updates to the DOM (something like a `mounted()` hook in VueJS), you can return a callback from `x-init`, and it will be run after:
+Si vous souhaitez éxécuter votre code après que Alpine ait mis à jour le DOM (similaire à `mounted()` sur Vue.js), vous pouvez placer votre code dans un callback.
 
-`x-init="() => { // we have access to the post-dom-initialization state here // }"`
+`x-init="() => { // nous avons accès aux données post-initialisation ici // }"`
 
 ---
 
 ### `x-show`
-**Example:** `<div x-show="open"></div>`
+
+**Exemple:** `<div x-show="open"></div>`
 
 **Structure:** `<div x-show="[expression]"></div>`
 
