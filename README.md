@@ -12,10 +12,7 @@ Think of it like [Tailwind](https://tailwindcss.com/) for JavaScript.
 
 > Note: This tool's syntax is almost entirely borrowed from [Vue](https://vuejs.org/) (and by extension [Angular](https://angularjs.org/)). I am forever grateful for the gift they are to the web.
 
-[**Documentation française**](./README.fr.md)
-[**日本語ドキュメント**](./README.ja.md)
-[**繁體中文使用文件**](./README_zh-TW.md)
-[**Документация на русском**](./README.ru.md)
+Documentation available in: [🇫🇷 (fr)](./README.fr.md) / [🇯🇵 (ja)](./README.ja.md) / [🇨🇳 (zh)](./README_zh-TW.md) - [🇷🇺 (ru)](./README.ru.md)
 
 ## Install
 
